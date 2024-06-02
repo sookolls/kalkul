@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> Раскладка грид</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <center>
+        <h2>Калькулятор</h2>
+    </center>
+    <link rel="manifest" href="manifest.json">
+    <script type="text/javascript">
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('serviceworker.js')
+                .then(function (registration) {
+                    console.log('Registration successful, scope is:', registration.scope);
+                })
+                .catch(function (error) {
+                    console.log('Service worker registration failed, error:', error);
+                });
+        }
+    </script>
+    <style>
+        @font-face {
+            font-family: "Czifra";
+            font-weight: normal;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+
+        .calc {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr;
+            grid-template-rows: 2fr 1fr 1fr 1fr 1fr 1fr;
+            grid-auto-flow: row;
+            height: 70vh;
+            width: 70vh;
+            margin: auto;
+        }
+
+        .menu {
+            border-style: solid;
+            border-color: maroon;
+            grid-column: span 4;
+        }
+
+        .numbers {
+            border-style: solid;
+            border-color: black;
+            grid-column: span 4;
+            font-size: 100px;
+            text-align: right;
+            font-family: 'Czifra';
+            color: black;
+            padding-top: 30px;
+            background: linear-gradient(#1E90FF, #2E9AFF, #447BD4, #6A93D4);
+        }
+
+        .button {
+            background-color: #F2BEE1;
+            color: black;
+            text-align: center;
+            font-family: "Czifra";
+            font-size: 30px;
+            border-style: solid;
+            border-color: mediumBlue;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition-property: all;
+            transition-duration: 1s;
+        }
+
+            .button:hover {
+                transform: translate(1px,5px);
+                background-color: #FFCD73;
+            }
+    </style>
+    <script>
+        let currDeistv = "";
+        let arg0 = 0;
+        let deistv = "";
+        /*function WinLoaded()
+        {
+        }
+        window.onload=WinLoaded; // Повесил обработчик на загрузку окна браузера
+        */
+        window.onload = function () // Безымянная функция
+        { // При загрузке окна браузера, когда он сформирует страничку
+            let elements = document.querySelectorAll(".num");
+            for (elem of elements) {
+                let elText = elem.innerHTML; //Текст с кнопочки из кода
+                elem.onclick = function () { NumberClick(elText); };
+                //elem.addEventListener("click",function(){NumberClick(elText)});
+            }
+        }
+
+        function NumberClick(par) {
+            let ekran = document.querySelector(".numbers");
+            /*получила элемент по классу в переменную*/
+            let text = ekran.innerHTML;
+            if (text == "0") {
+                text = "";
+            }
+            if (text.length > 10) {
+                return; /*прекратить выполнение ф-ции*/
+            }
+            /*получить содержимое блока*/
+            text = text + par;
+            ekran.innerHTML = text;
+        }
+        function DeistvClick(par) {
+            let ekran = document.querySelector(".numbers");
+            let text = ekran.innerHTML;
+            arg0 = Number(text);
+            deistv = par;
+            ekran.innerHTML = "";
+        }
+        function pointClick() {
+            let ekran = document.querySelector(".numbers");
+            ekran.innerHTML += ".";
+        }
+        function restart() {
+            let ekran = document.querySelector(".numbers");
+            ekran.innerHTML = "";
+            let res = 0;
+        }
+        function MinusCifra() {
+            let ekran = document.querySelector(".numbers");
+            let text = ekran.innerHTML;
+            let res = text.substring(0, text.length - 1);
+            ekran.innerHTML = res;
+            //let ekran = document.querySelector(".numbers");
+            //let text = ekran.innerHTML;
+            //arg1 = Number(text);
+            //let res = (arg1 - (arg1 % 10)) / 10;
+            //ekran.innerHTML = res;
+        }
+        function clearElement() {
+            let ekran = document.querySelector(".numbers");
+            ekran.innerHTML = "";
+        }
+        function PlusMinus() {
+            let ekran = document.querySelector(".numbers");
+            let text = ekran.innerHTML;
+            arg0 = Number(text);
+            let res = -arg0;
+            ekran.innerHTML = res;
+        }
+        function RavnoClick() {
+            let ekran = document.querySelector(".numbers");
+            let text = ekran.innerHTML;
+            arg1 = Number(text);
+            let res = 0;
+            if (deistv == "+") {
+                res = arg0 + arg1;
+            }
+            ekran.innerHTML = res;
+            if (deistv == "-") {
+                res = arg0 - arg1;
+            }
+            ekran.innerHTML = res;
+            if (deistv == "x") {
+                res = arg0 * arg1;
+            }
+            ekran.innerHTML = res;
+            if (deistv == "1/x" && arg0 != 0) {
+                res = 1 / arg0;
+            }
+            ekran.innerHTML = res;
+            if (deistv == "x^2") {
+                res = arg0 ** 2;
+            }
+            ekran.innerHTML = res;
+            if (deistv == "/") {
+                res = arg0 / arg1;
+
+            }
+            ekran.innerHTML = res;
+            if (deistv == "%") {
+                res = arg0 * 0.01;
+
+            }
+            ekran.innerHTML = res;
+            if (deistv == "√") {
+                res = arg0 ** 0.5;
+
+            }
+            ekran.innerHTML = res;
+        }
+    </script>
+</head>
+<body>
+    <div class="calc">
+
+        <div class="numbers">0</div>
+        <div class="button" onclick="DeistvClick('%')">%</div>
+        <div class="button" onclick="clearElement()">C</div>
+        <div class="button" onclick="restart()">CE</div>
+        <div class="button" onclick="MinusCifra('&leftarrow')">&leftarrow;</div>
+        <div class="button" onclick="DeistvClick('1/x')">1/x</div>
+        <div class="button" onclick="DeistvClick('x^2')">x^2</div>
+        <div class="button" onclick="DeistvClick('√')">√</div>
+        <div class="button" onclick="DeistvClick('/')">/</div>
+        <div class="button num">7</div>
+        <div class="button num">8</div>
+        <div class="button num">9</div>
+        <div class="button" onclick="DeistvClick('x')">x</div>
+        <div class="button num">4</div>
+        <div class="button num">5</div>
+        <div class="button num">6</div>
+        <div class="button" onclick="DeistvClick('-')">-</div>
+        <div class="button num">1</div>
+        <div class="button num">2</div>
+        <div class="button num">3</div>
+        <div class="button" onclick="DeistvClick('+')">+</div>
+        <div class="button" onclick="PlusMinus('+/-')">+/-</div>
+        <div class="button num">0</div>
+        <div class="button" onclick="pointClick()">,</div>
+        <div class="button" onclick="RavnoClick()">=</div>
+    </div>
+</body>
+</html>
