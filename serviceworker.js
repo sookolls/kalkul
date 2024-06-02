@@ -23,6 +23,7 @@ const PRECACHE_URLS = [
   'index.html',
   'style.css',
   'logo192.png',
+ 'logo192.jpg',
   'logo512.png'
 ];
 //  './', // Alias for index.html
