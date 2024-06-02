@@ -22,8 +22,8 @@ const RUNTIME = 'runtime';
 const PRECACHE_URLS = [
   'index.html',
   'style.css',
-  'logo192.png',
-  'logo512.png'
+  'logo192.jpg',
+  'logo512.jpg'
 ];
 //  './', // Alias for index.html
 // The install handler takes care of precaching the resources we always need.
