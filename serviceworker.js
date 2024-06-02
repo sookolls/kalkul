@@ -21,9 +21,9 @@ const RUNTIME = 'runtime';
 // Что мы хотим кэшить
 const PRECACHE_URLS = [
   'index.html',
-
-  'kot192.jpg',
-  'kot512.jpg'
+  'style.css',
+  'logo192.jpg',
+  'logo512.jpg'
 ];
 //  './', // Alias for index.html
 // The install handler takes care of precaching the resources we always need.
